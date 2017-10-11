@@ -1,0 +1,24 @@
+{
+  "name": "choo-phaser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --verbose | snazzy",
+    "start": "budo -v -p 8080 -H 0.0.0.0 -d assets index.js -- -t sheetify"
+  },
+  "keywords": [],
+  "author": "Yerko Palma",
+  "license": "MIT",
+  "dependencies": {
+    "choo": "^6.4.1",
+    "phaser": "^2.6.2",
+    "sheetify": "^6.2.0",
+    "tachyons": "^4.8.1"
+  },
+  "devDependencies": {
+    "budo": "^10.0.4",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.3"
+  }
+}
