@@ -14,6 +14,6 @@ document.body.appendChild(tree)
 
 function clearGame (state, emitter) {
   emitter.on('navigate', function () {
-    if (state.game && state.route !== '/stage/:id') state.game.destroy()
+    if (state.game) state.game.destroy()
   })
 }
