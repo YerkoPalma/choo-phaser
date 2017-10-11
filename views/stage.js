@@ -10,7 +10,7 @@ module.exports = function (state, emit) {
       state.game.load.image('background', '../../background.jpg')
     },
     create: function () {
-      state.game.add.sprite(0, 0, 'background')
+      state.game.add.tileSprite(0, 0, window.outerWidth, window.outerHeight, 'background')
     },
     update: function () {
 
