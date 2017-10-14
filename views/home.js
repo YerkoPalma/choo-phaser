@@ -29,11 +29,20 @@ var border = css`
     box-shadow: 0px 0px 0px 1rem #ff6300;
   }
 `
+var background = css`
+  :host {
+    background: url(background.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+`
 module.exports = function (state, emit) {
   return html`
-  <main class="${font} cf w-100 pa2-ns bg-light-blue vh-100">
+  <main class="${font} ${background} cf w-100 pa2-ns bg-light-blue vh-100">
     <h1 class="${heading} tc f1 white">Level Select</h1>
-    <article class="fl w-100 w-50-m  w-25-ns pa2-ns">
+    <article class="fl w-100 w-50-m  w-25-ns pa4">
       <div class="aspect-ratio aspect-ratio--1x1 br4 ma3 ${border}">
         <div class="aspect-ratio aspect-ratio--1x1 ba bw4 b--gold br4 bg-gold">
           <p class="f-headline tc w-100 white">1</p>
