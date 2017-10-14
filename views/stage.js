@@ -7,13 +7,17 @@ module.exports = function (state, emit) {
 
   var gameState = {
     preload: function () {
-      state.game.load.image('background', '../../background.jpg')
+      state.game.load.image('background', '../../background.png')
+      state.game.load.atlas('girl', '../../spritesheet.png', '../../sprites.json')
     },
     create: function () {
       state.game.add.tileSprite(0, 0, window.outerWidth, window.outerHeight, 'background')
+      state.girlSprite = state.game.add.sprite(0, 0, 'girl')
+      state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 5, true)
+      state.girlSprite.scale.setTo(0.5)
     },
     update: function () {
-
+      state.girlSprite.animations.play('idle', 16, true)
     }
   }
 
