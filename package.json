@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "budo": "^10.0.4",
+    "choo-devtools": "^1.4.0",
+    "choo-log": "^7.2.1",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3"
   }

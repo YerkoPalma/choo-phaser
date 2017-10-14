@@ -11,10 +11,13 @@ module.exports = function (state, emit) {
       state.game.load.atlas('girl', '../../spritesheet.png', '../../sprites.json')
     },
     create: function () {
-      state.game.add.tileSprite(0, 0, window.outerWidth, window.outerHeight, 'background')
+      state.backgroundSprite = state.game.add.sprite(0, 0, 'background')
+      state.backgroundSprite.height = state.game.height
+      state.backgroundSprite.width = state.game.width
       state.girlSprite = state.game.add.sprite(0, 0, 'girl')
       state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 5, true)
       state.girlSprite.scale.setTo(0.5)
+      state.girlSprite.position.y = state.game.height - (state.girlSprite.height * 1.3)
     },
     update: function () {
       state.girlSprite.animations.play('idle', 16, true)
