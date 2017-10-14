@@ -23,6 +23,6 @@ module.exports = function (state, emit) {
 
   state.game.state.add('initialState', gameState)
   state.game.state.start('initialState')
-  // bypass nanorouter assertion returning an empty div
+  // bypass nanorouter assertion returning an empty main
   return document.createElement('main')
 }

@@ -91,4 +91,19 @@ document.body.appendChild(tree)
 That's why nanomorph complain about a main element. So I have to return a new empty 
 element in the view that has my phaser game.
 
+To fix this, I've returned a new `MAIN` element, and the view was set and the game 
+displayed fine. But I noticed an issue whenever I hit the back button of my browser.
+Choo emitted the navigation events and come back to my previous route, but the game 
+was still visible, that's because the canvas rendered by Phaser was outside what was 
+rendered and managed by choo, so I created a litle hook for choo, to clear my game 
+whenever a navigation events happens.
 
+```js
+app.use(clearGame)
+
+function clearGame (state, emitter) {
+  emitter.on('navigate', function () {
+    if (state.game) state.game.destroy()
+  })
+}
+```
