@@ -33,7 +33,10 @@ module.exports = function (state, emit) {
         wordWrap: true,
         wordWrapWidth: state.game.width / 2
       })
-      state.text = ['Complete the following three stages to finish the game']
+      state.text = [
+        'Complete the following three stages to finish the game',
+        'Stage 1: Select the numbers'
+      ]
       writeInstructions()
     },
     update: function () {
@@ -54,10 +57,6 @@ module.exports = function (state, emit) {
 
   function writeInstructions () {
     if (lineIndex === state.text.length) {
-      // clear text
-      setTimeout(() => {
-        state.instructions.text = ''
-      }, 1500)
       // We're finished
       return
     }
@@ -87,11 +86,12 @@ module.exports = function (state, emit) {
 
     //  Last word?
     if (wordIndex === line.length) {
-      //  Add a carriage return
-      state.instructions.text = state.instructions.text.concat('\n')
-
-      //  Get the next line after the lineDelay amount of ms has elapsed
-      state.game.time.events.add(lineDelay, writeInstructions, this)
+      // clear text
+      setTimeout(() => {
+        state.instructions.text = ''
+        //  Get the next line after the lineDelay amount of ms has elapsed
+        state.game.time.events.add(lineDelay, writeInstructions, this)
+      }, 1000)
     }
   }
 }
