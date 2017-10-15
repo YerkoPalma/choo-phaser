@@ -12,6 +12,7 @@ module.exports = function (state, emit) {
     preload: function () {
       state.game.load.image('background', '../../background.png')
       state.game.load.atlas('girl', '../../spritesheet.png', '../../sprites.json')
+      state.game.load.image('kids', '../../singing.png')
     },
     create: function () {
       // background
@@ -35,7 +36,8 @@ module.exports = function (state, emit) {
       })
       state.text = [
         'Complete the following three stages to finish the game',
-        'Stage 1: Select the numbers'
+        'Stage 1: Select the correct numbers',
+        'From the singing kids, how many of them have dresses?'
       ]
       writeInstructions()
     },
@@ -60,11 +62,14 @@ module.exports = function (state, emit) {
       // We're finished
       return
     }
+    if (lineIndex === 2) {
+      state.kids = state.game.add.sprite(state.game.world.centerX / 2, 220, 'kids')
+      state.kids.scale.setTo(0.7)
+    }
 
     //  Split the current line on spaces, so one letter per array element
     line = state.text[lineIndex].split('')
     // Say the line
-    emit('log:info', state.tts.selectedVoice)
     emit('tts:speak', state.text[lineIndex])
 
     //  Reset the word index to zero (the first word in the line)
