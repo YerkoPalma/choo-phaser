@@ -18,6 +18,9 @@ module.exports = function (state, emit) {
       state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 5, true)
       state.girlSprite.scale.setTo(0.5)
       state.girlSprite.position.y = state.game.height - (state.girlSprite.height * 1.3)
+
+      // announce the game
+      emit('tts:speak', 'Let the game begin!')
     },
     update: function () {
       state.girlSprite.animations.play('idle', 16, true)
