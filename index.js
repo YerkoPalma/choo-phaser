@@ -32,7 +32,8 @@ function interactive (state, emitter) {
       return voice.lang === 'en-GB'
     })[0]
     // talk a bit slower, they are just kids
-    state.tts.rate = 0.8
+    state.tts.rate = 0.9
+    emitter.emit('log:info', state.tts.selectedVoice)
     emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
   })
 }
