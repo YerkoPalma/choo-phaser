@@ -8,7 +8,7 @@ css('tachyons', { global: true })
 
 var app = choo()
 if (process.env.NODE_ENV !== 'production') {
-  // app.use(require('choo-devtools')())
+  app.use(require('choo-devtools')())
   app.use(require('choo-log')())
 }
 app.use(tts)
