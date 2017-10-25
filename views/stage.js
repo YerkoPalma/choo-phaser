@@ -34,6 +34,26 @@ module.exports = function (state, emit) {
         wordWrap: true,
         wordWrapWidth: state.game.width / 2
       })
+
+      // options
+      state.options = [0, 1, 2, 3, 4].map((_, i) => {
+        var opt = state.game.add.text((i * 150) + state.game.world.centerX / 2, 50, '', {
+          font: '146px Skranji',
+          fill: '#FF6300',
+          align: 'center',
+          wordWrap: true,
+          wordWrapWidth: state.game.width / 2
+        })
+        opt.stroke = '#FF0000'
+        opt.strokeThickness = 12
+        opt.setShadow(2, 2, '#333333', 2)
+        opt.inputEnabled = true
+        opt.events.onInputUp.add(() => {
+          if (state.correctOption === opt.text) emit('tts:speak', 'That\'s correct! congratulations')
+          else emit('tts:speak', 'Incorrect! Sorry, please try again')
+        }, opt)
+        return opt
+      })
       state.text = [
         'Complete the following three stages to finish the game',
         'Stage 1: Select the correct numbers',
@@ -59,7 +79,11 @@ module.exports = function (state, emit) {
 
   function writeInstructions () {
     if (lineIndex === state.text.length) {
-      // We're finished
+      // We've finished
+      state.options.map((opt, i) => {
+        opt.text = (i + 1)
+      })
+      state.correctOption = '2'
       return
     }
     if (lineIndex === 2) {
