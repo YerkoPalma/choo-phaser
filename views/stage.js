@@ -8,6 +8,9 @@ module.exports = function (state, emit) {
   })[0]
   state.game = new window.Phaser.Game('100', '100', window.Phaser.AUTO)
 
+  var line = []
+  var wordIndex = 0
+  var lineIndex = 0
   var gameState = {
     preload: function () {
       state.game.load.image('background', '../../background.png')
@@ -49,16 +52,46 @@ module.exports = function (state, emit) {
         opt.setShadow(2, 2, '#333333', 2)
         opt.inputEnabled = true
         opt.events.onInputUp.add(() => {
-          if (state.correctOption === opt.text) emit('tts:speak', 'That\'s correct! congratulations')
-          else emit('tts:speak', 'Incorrect! Sorry, please try again')
+          if (state.steps[state.currentStep].correctOption === opt.text) {
+            emit('tts:speak', 'That\'s correct! congratulations')
+            if (state.currentStep < state.steps.length - 1) {
+              line = []
+              wordIndex = 0
+              lineIndex = 0
+              state.currentStep++
+              writeInstructions()
+            }
+            // else finish
+          } else {
+            emit('tts:speak', 'Incorrect! Sorry, please try again')
+          }
         }, opt)
         return opt
       })
-      state.text = [
+      /* state.text = [
         'Complete the following three stages to finish the game',
         'Stage 1: Select the correct numbers',
         'From the singing kids, how many of them have dresses?'
+      ] */
+      state.steps = [
+        {
+          instructions: [
+            'Complete the following three stages to finish the game',
+            'Stage 1: Select the correct numbers',
+            'From the singing kids, how many of them have dresses?'
+          ],
+          options: ['1', '2', '3', '4', '5'],
+          correctOption: '2'
+        },
+        {
+          instructions: [
+            'How many kids have their eyes closed?'
+          ],
+          options: ['3', '2', '1', '4', '6'],
+          correctOption: '4'
+        }
       ]
+      state.currentStep = 0
       writeInstructions()
     },
     update: function () {
@@ -66,9 +99,6 @@ module.exports = function (state, emit) {
     }
   }
 
-  var line = []
-  var wordIndex = 0
-  var lineIndex = 0
   var wordDelay = 60
   var lineDelay = 400
 
@@ -78,12 +108,16 @@ module.exports = function (state, emit) {
   return document.createElement('main')
 
   function writeInstructions () {
-    if (lineIndex === state.text.length) {
+    if (lineIndex === 0) {
+      state.options.map((opt, i) => {
+        opt.text = ''
+      })
+    }
+    if (lineIndex === state.steps[state.currentStep].instructions.length) {
       // We've finished
       state.options.map((opt, i) => {
-        opt.text = (i + 1)
+        opt.text = state.steps[state.currentStep].options[i]
       })
-      state.correctOption = '2'
       return
     }
     if (lineIndex === 2) {
@@ -92,9 +126,9 @@ module.exports = function (state, emit) {
     }
 
     //  Split the current line on spaces, so one letter per array element
-    line = state.text[lineIndex].split('')
+    line = state.steps[state.currentStep].instructions[lineIndex].split('')
     // Say the line
-    emit('tts:speak', state.text[lineIndex])
+    emit('tts:speak', state.steps[state.currentStep].instructions[lineIndex])
 
     //  Reset the word index to zero (the first word in the line)
     wordIndex = 0
