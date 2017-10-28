@@ -53,14 +53,10 @@ module.exports = function (state, emit) {
         opt.inputEnabled = true
         opt.events.onInputUp.add(() => {
           if (state.steps[state.currentStep].correctOption === opt.text) {
-            emit('tts:speak', 'That\'s correct! congratulations')
-            if (state.currentStep < state.steps.length - 1) {
-              line = []
-              wordIndex = 0
-              lineIndex = 0
-              state.currentStep++
-              writeInstructions()
-            }
+            emit('tts:speak', {
+              text: 'That\'s correct! congratulations',
+              id: 'opt'
+            })
             // else finish
           } else {
             emit('tts:speak', 'Incorrect! Sorry, please try again')
@@ -81,14 +77,32 @@ module.exports = function (state, emit) {
             'From the singing kids, how many of them have dresses?'
           ],
           options: ['1', '2', '3', '4', '5'],
-          correctOption: '2'
+          correctOption: '2',
+          next: () => {
+            if (state.currentStep < state.steps.length - 1) {
+              line = []
+              wordIndex = 0
+              lineIndex = 0
+              state.currentStep++
+              writeInstructions()
+            }
+          }
         },
         {
           instructions: [
             'How many kids have their eyes closed?'
           ],
           options: ['3', '2', '1', '4', '6'],
-          correctOption: '4'
+          correctOption: '4',
+          next: () => {
+            if (state.currentStep < state.steps.length - 1) {
+              line = []
+              wordIndex = 0
+              lineIndex = 0
+              state.currentStep++
+              writeInstructions()
+            }
+          }
         }
       ]
       state.currentStep = 0

@@ -9,7 +9,7 @@ css('tachyons', { global: true })
 var app = choo()
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())
-  app.use(require('choo-log')())
+  // app.use(require('choo-log')())
 }
 app.use(tts)
 app.use(clearGame)
@@ -35,5 +35,8 @@ function interactive (state, emitter) {
     state.tts.rate = 0.9
     emitter.emit('log:info', state.tts.selectedVoice)
     emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
+  })
+  emitter.on('tts:speech-end', function ({ event, id }) {
+    if (id === 'opt') state.steps[state.currentStep].next()
   })
 }
