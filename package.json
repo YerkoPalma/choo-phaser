@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "choo": "^6.5.1",
+    "choo-stt": "^0.1.0",
     "choo-tts": "^0.2.0",
     "phaser": "^2.6.2",
     "sheetify": "^6.2.0",
