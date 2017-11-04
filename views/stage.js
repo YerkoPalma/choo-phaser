@@ -25,7 +25,8 @@ module.exports = function (state, emit) {
 
       // character
       state.girlSprite = state.game.add.sprite(0, 0, 'girl')
-      state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 5, true)
+      state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 16, true)
+      state.girlSprite.animations.add('walk', window.Phaser.Animation.generateFrameNames('walk', 1, 20), 20, false)
       state.girlSprite.scale.setTo(0.5)
       state.girlSprite.position.y = state.game.height - (state.girlSprite.height * 1.3)
 
@@ -51,6 +52,7 @@ module.exports = function (state, emit) {
         opt.strokeThickness = 12
         opt.setShadow(2, 2, '#333333', 2)
         opt.inputEnabled = true
+        opt.input.useHandCursor = true
         opt.events.onInputUp.add(() => {
           if (state.steps[state.currentStep].correctOption === opt.text) {
             emit('tts:speak', {
@@ -64,11 +66,6 @@ module.exports = function (state, emit) {
         }, opt)
         return opt
       })
-      /* state.text = [
-        'Complete the following three stages to finish the game',
-        'Stage 1: Select the correct numbers',
-        'From the singing kids, how many of them have dresses?'
-      ] */
       state.steps = [
         {
           instructions: [
@@ -78,15 +75,7 @@ module.exports = function (state, emit) {
           ],
           options: ['1', '2', '3', '4', '5'],
           correctOption: '2',
-          next: () => {
-            if (state.currentStep < state.steps.length - 1) {
-              line = []
-              wordIndex = 0
-              lineIndex = 0
-              state.currentStep++
-              writeInstructions()
-            }
-          }
+          next
         },
         {
           instructions: [
@@ -94,23 +83,14 @@ module.exports = function (state, emit) {
           ],
           options: ['3', '2', '1', '4', '6'],
           correctOption: '4',
-          next: () => {
-            if (state.currentStep < state.steps.length - 1) {
-              line = []
-              wordIndex = 0
-              lineIndex = 0
-              state.currentStep++
-              writeInstructions()
-            }
-          }
+          next
         }
       ]
       state.currentStep = 0
+      state.girlSprite.animations.play('idle', 16, true)
       writeInstructions()
     },
-    update: function () {
-      state.girlSprite.animations.play('idle', 16, true)
-    }
+    update: function () {}
   }
 
   var wordDelay = 60
@@ -121,6 +101,30 @@ module.exports = function (state, emit) {
   // bypass nanorouter assertion returning an empty main
   return document.createElement('main')
 
+  function next () {
+    if (state.currentStep < state.steps.length - 1) {
+      line = []
+      wordIndex = 0
+      lineIndex = 0
+      state.currentStep++
+      writeInstructions()
+    } else {
+      state.kids.destroy()
+      // move the girl
+      // var idleAnimation = state.girlSprite.animations.getAnimation('idle')
+      // var walkAnimation = state.girlSprite.animations.getAnimation('walk')
+
+      // idleAnimation.paused = true
+      // state.girlSprite.animations.play('walk', 20, true)
+      // state.girlSprite.animations.currentAnim = walkAnimation
+      state.girlSprite.animations.play('walk', 20, true)
+      state.game.add.tween(state.girlSprite).to({
+        x: state.girlSprite.position.x + 200
+      }, 3000, null, true).onComplete.add((girlSprite, tween) => {
+        state.girlSprite.animations.play('idle', 16, true)
+      })
+    }
+  }
   function writeInstructions () {
     if (lineIndex === 0) {
       state.options.map((opt, i) => {
