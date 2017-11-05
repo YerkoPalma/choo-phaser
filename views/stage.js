@@ -28,7 +28,7 @@ module.exports = function (state, emit) {
       state.girlSprite.animations.add('idle', window.Phaser.Animation.generateFrameNames('idle', 1, 16), 16, true)
       state.girlSprite.animations.add('walk', window.Phaser.Animation.generateFrameNames('walk', 1, 20), 20, false)
       state.girlSprite.scale.setTo(0.5)
-      state.girlSprite.position.y = state.game.height - (state.girlSprite.height * 1.3)
+      state.girlSprite.position.y = state.game.height - (state.girlSprite.height * 1.2)
 
       // instructions
       state.instructions = state.game.add.text(state.game.world.centerX / 2, 50, '', {
@@ -43,18 +43,18 @@ module.exports = function (state, emit) {
       state.options = [0, 1, 2, 3, 4].map((_, i) => {
         var opt = state.game.add.text((i * 150) + state.game.world.centerX / 2, 50, '', {
           font: '146px Skranji',
-          fill: '#FF6300',
+          fill: '#eeeeee',
           align: 'center',
           wordWrap: true,
           wordWrapWidth: state.game.width / 2
         })
         opt.stroke = '#FF0000'
         opt.strokeThickness = 12
-        opt.setShadow(2, 2, '#333333', 2)
+        // opt.setShadow(2, 2, '#333333', 2)
         opt.inputEnabled = true
         opt.input.useHandCursor = true
         opt.events.onInputUp.add(() => {
-          if (state.steps[state.currentStep].correctOption === opt.text) {
+          if (state.steps[state.currentStage][state.currentStep].correctOption === opt.text) {
             emit('tts:speak', {
               text: 'That\'s correct! congratulations',
               id: 'opt'
@@ -66,7 +66,7 @@ module.exports = function (state, emit) {
         }, opt)
         return opt
       })
-      state.steps = [
+      state.steps = [[
         {
           instructions: [
             'Complete the following three stages to finish the game',
@@ -85,8 +85,28 @@ module.exports = function (state, emit) {
           correctOption: '4',
           next
         }
+      ],
+      [
+        {
+          instructions: [
+            'Stage 2: Resolve number operations',
+            'Select the correct option from the following operation'
+          ],
+          options: ['1', '2', '3', '4', '5'],
+          correctOption: '2',
+          next
+        },
+        {
+          instructions: [
+          ],
+          options: ['3', '2', '1', '4', '6'],
+          correctOption: '4',
+          next
+        }
+      ]
       ]
       state.currentStep = 0
+      state.currentStage = 0
       state.girlSprite.animations.play('idle', 16, true)
       writeInstructions()
     },
@@ -102,27 +122,38 @@ module.exports = function (state, emit) {
   return document.createElement('main')
 
   function next () {
-    if (state.currentStep < state.steps.length - 1) {
+    if (state.currentStep < state.steps[state.currentStage].length - 1) {
       line = []
       wordIndex = 0
       lineIndex = 0
       state.currentStep++
       writeInstructions()
     } else {
-      state.kids.destroy()
-      // move the girl
-      // var idleAnimation = state.girlSprite.animations.getAnimation('idle')
-      // var walkAnimation = state.girlSprite.animations.getAnimation('walk')
-
-      // idleAnimation.paused = true
-      // state.girlSprite.animations.play('walk', 20, true)
-      // state.girlSprite.animations.currentAnim = walkAnimation
-      state.girlSprite.animations.play('walk', 20, true)
-      state.game.add.tween(state.girlSprite).to({
-        x: state.girlSprite.position.x + 200
-      }, 3000, null, true).onComplete.add((girlSprite, tween) => {
-        state.girlSprite.animations.play('idle', 16, true)
-      })
+      if (state.currentStage < state.steps.length - 1) {
+        state.currentStage++
+        state.currentStep = 0
+        line = []
+        wordIndex = 0
+        lineIndex = 0
+        state.kids.destroy()
+        state.girlSprite.animations.play('walk', 20, true)
+        state.game.add.tween(state.girlSprite).to({
+          x: state.game.width * 0.4
+        }, 3000, null, true).onComplete.add((girlSprite, tween) => {
+          state.girlSprite.animations.play('idle', 16, true)
+          writeInstructions()
+        })
+      } else {
+        // btoh stages re finished animate and go back
+        state.girlSprite.animations.play('walk', 20, true)
+        state.game.add.tween(state.girlSprite).to({
+          x: state.game.width
+        }, 3000, null, true).onComplete.add((girlSprite, tween) => {
+          // state.girlSprite.animations.play('idle', 16, true)
+          // writeInstructions()
+          setTimeout(() => emit(state.events.PUSHSTATE, '/'), 1500)
+        })
+      }
     }
   }
   function writeInstructions () {
@@ -131,10 +162,10 @@ module.exports = function (state, emit) {
         opt.text = ''
       })
     }
-    if (lineIndex === state.steps[state.currentStep].instructions.length) {
+    if (lineIndex === state.steps[state.currentStage][state.currentStep].instructions.length) {
       // We've finished
       state.options.map((opt, i) => {
-        opt.text = state.steps[state.currentStep].options[i]
+        opt.text = state.steps[state.currentStage][state.currentStep].options[i]
       })
       return
     }
@@ -144,9 +175,9 @@ module.exports = function (state, emit) {
     }
 
     //  Split the current line on spaces, so one letter per array element
-    line = state.steps[state.currentStep].instructions[lineIndex].split('')
+    line = state.steps[state.currentStage][state.currentStep].instructions[lineIndex].split('')
     // Say the line
-    emit('tts:speak', state.steps[state.currentStep].instructions[lineIndex])
+    emit('tts:speak', state.steps[state.currentStage][state.currentStep].instructions[lineIndex])
 
     //  Reset the word index to zero (the first word in the line)
     wordIndex = 0

@@ -36,6 +36,6 @@ function interactive (state, emitter) {
     emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
   })
   emitter.on('tts:speech-end', function ({ event, id }) {
-    if (id === 'opt') state.steps[state.currentStep].next()
+    if (id === 'opt') state.steps[state.currentStage][state.currentStep].next()
   })
 }
