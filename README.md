@@ -107,3 +107,23 @@ function clearGame (state, emitter) {
   })
 }
 ```
+
+# Usage
+
+Right now, more of the game data is saved to the state.
+
+- `state.game` - Is the Phaser.Game instance.
+- `state.sprites` - All the sprites goes here.
+- `state.steps` - This is particular to this kind of games. Is an array of arrays, where every inside array is a stage, and inside it is the steps of that stage. Each step has the following properties.
+  - `instructions` - An array of strings to be displayed and spoken through text-to-speech.
+  - `options` - At most 5 options for the children to choose.
+  - `correcOption` - The correct option.
+  - `next` - A function to be executed when the correct option is hit by the kid.
+- `state.currentStep` and `state.currentStage` - Used internally to know which stage and step to display.
+- `state.instructions` and `state.options` - Phaser.Text objects to display instructions and options.
+- `state.results` - An array with the results of each stage. Each result object has the following properties.
+  - `time` - The amount of time the kid took to finish each stage (always an array with two numbers)
+  - `mistakes` - The numbers of mistakes the kid made
+  - `resolved` - Array of booleans telling if the kid resolved each stage of the game.
+
+Right now, there is only one `writeInstructions` function and one `next` function, and they only support two stages.
