@@ -11,6 +11,10 @@ module.exports = function (state, emit) {
   var line = []
   var wordIndex = 0
   var lineIndex = 0
+  var start
+  var end
+  var mistakes = 0
+  state.results = []
   var gameState = {
     preload: function () {
       state.game.load.image('background', '../../background.png')
@@ -62,6 +66,7 @@ module.exports = function (state, emit) {
             // else finish
           } else {
             emit('tts:speak', 'Incorrect! Sorry, please try again')
+            mistakes++
           }
         }, opt)
         return opt
@@ -108,6 +113,7 @@ module.exports = function (state, emit) {
       state.currentStep = 0
       state.currentStage = 0
       state.girlSprite.animations.play('idle', 16, true)
+      start = new Date()
       writeInstructions()
     },
     update: function () {}
@@ -129,6 +135,14 @@ module.exports = function (state, emit) {
       state.currentStep++
       writeInstructions()
     } else {
+      end = new Date()
+      var results = {
+        time: Math.abs((start.getTime() - end.getTime()) / 1000),
+        resolved: true,
+        mistakes
+      }
+      state.results[state.currentStage] = results
+      mistakes = 0
       if (state.currentStage < state.steps.length - 1) {
         state.currentStage++
         state.currentStep = 0
@@ -141,6 +155,7 @@ module.exports = function (state, emit) {
           x: state.game.width * 0.4
         }, 3000, null, true).onComplete.add((girlSprite, tween) => {
           state.girlSprite.animations.play('idle', 16, true)
+          start = new Date()
           writeInstructions()
         })
       } else {
@@ -149,8 +164,7 @@ module.exports = function (state, emit) {
         state.game.add.tween(state.girlSprite).to({
           x: state.game.width
         }, 3000, null, true).onComplete.add((girlSprite, tween) => {
-          // state.girlSprite.animations.play('idle', 16, true)
-          // writeInstructions()
+          // save results
           setTimeout(() => emit(state.events.PUSHSTATE, '/'), 1500)
         })
       }
@@ -163,7 +177,8 @@ module.exports = function (state, emit) {
       })
     }
     if (lineIndex === state.steps[state.currentStage][state.currentStep].instructions.length) {
-      // We've finished
+      // Time to display options
+      // and start measuring time
       state.options.map((opt, i) => {
         opt.text = state.steps[state.currentStage][state.currentStep].options[i]
       })
@@ -174,7 +189,7 @@ module.exports = function (state, emit) {
       state.kids.scale.setTo(0.7)
     }
 
-    //  Split the current line on spaces, so one letter per array element
+    // Split the current line on spaces, so one letter per array element
     line = state.steps[state.currentStage][state.currentStep].instructions[lineIndex].split('')
     // Say the line
     emit('tts:speak', state.steps[state.currentStage][state.currentStep].instructions[lineIndex])
