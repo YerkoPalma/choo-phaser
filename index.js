@@ -11,14 +11,17 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())
 }
 app.use(tts)
-app.use(clearGame)
+app.use(game)
 app.use(interactive)
 app.route('/', homeView)
 app.route('/stage/:id', stageView)
 var tree = app.start()
 document.body.appendChild(tree)
 
-function clearGame (state, emitter) {
+function game (state, emitter) {
+  // init game
+  state.stages = [] // here goes any result
+  // clear game
   emitter.on('navigate', function () {
     if (state.game) state.game.destroy()
   })

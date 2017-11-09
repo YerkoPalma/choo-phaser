@@ -165,6 +165,8 @@ module.exports = function (state, emit) {
           x: state.game.width
         }, 3000, null, true).onComplete.add((girlSprite, tween) => {
           // save results
+          state.stages.push(state.results)
+          state.results = []
           setTimeout(() => emit(state.events.PUSHSTATE, '/'), 1500)
         })
       }
