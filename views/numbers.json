@@ -2,8 +2,8 @@
   "id": "numbers",
   "mainSprite": {
     "name": "girl",
+    "mainAnimation": "idle",
     "animations": {
-        "main": "idle",
         "idle": {
           "from": 1,
           "to": 16,
