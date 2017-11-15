@@ -1,0 +1,60 @@
+{
+  "id": "profesions",
+  "mainSprite": {
+    "name": "girl",
+    "mainAnimation": "idle",
+    "animations": {
+        "idle": {
+          "from": 1,
+          "to": 16,
+          "loop": true
+        },
+        "walk": {
+          "from": 1,
+          "to": 20
+        }
+      }
+  },
+  "steps": [
+    [
+      {
+        "instructions": [
+          "Complete the following three stages to finish the game",
+          "Stage 1: Select the correct numbers",
+          "From the singing kids, how many of them have dresses?"
+        ],
+        "options": ["1", "2", "3", "4", "5"],
+        "correctOption": "2"
+      },
+      {
+        "instructions": [
+          "How many kids have their eyes closed?"
+        ],
+        "options": ["3", "2", "1", "4", "6"],
+        "correctOption": "4"
+      }
+    ],
+      [
+        {
+          "instructions": [
+            "Stage 2: Resolve number operations",
+            "Select the correct option from the following operation"
+          ],
+          "options": ["1", "2", "3", "4", "5"],
+          "correctOption": "2"
+        },
+        {
+          "instructions": [
+          ],
+          "options": ["3", "2", "1", "4", "6"],
+          "correctOption": "4"
+        }
+      ]
+    ],
+  "sprites": [
+    {
+      "name": "kids",
+      "file": "/singing.png"
+    }
+  ]
+}
