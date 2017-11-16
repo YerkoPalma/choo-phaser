@@ -24,9 +24,16 @@ var heading = css`
 `
 var border = css`
   :host {
-    -webkit-box-shadow: 0px 0px 0px 4px #fff;
-    -moz-box-shadow: 0px 0px 0px 4px #fff;
+    -webkit-box-shadow: 0px 0px 0px 4px #ff6300;
+    -moz-box-shadow: 0px 0px 0px 4px #ff6300;
     box-shadow: 0px 0px 0px 1rem #ff6300;
+  }
+`
+var borderSuccess = css`
+  :host {
+    -webkit-box-shadow: 0px 0px 0px 4px #137752;
+    -moz-box-shadow: 0px 0px 0px 4px #137752;
+    box-shadow: 0px 0px 0px 1rem #137752;
   }
 `
 var background = css`
@@ -77,7 +84,10 @@ module.exports = function (state, emit) {
       return html`<article class="fl w-100 w-50-m  w-25-ns pa4">
       <a href="/stage/${stage.id}" class="ph2 ph0-ns pb3 link db">
         <div class="aspect-ratio aspect-ratio--1x1 br4 ma3 ${border}">
-          <div class="aspect-ratio aspect-ratio--1x1 ba bw4 b--gold br4 bg-gold">
+          <div class="aspect-ratio aspect-ratio--1x1 ba bw4 br4 
+            ${state.stages && state.stages[stage.id] && state.stages[stage.id][0].resolved && state.stages[stage.id][1].resolved
+              ? 'b--green bg-green ' + borderSuccess
+              : 'b--gold bg-gold ' + border} ">
             <p class="f-headline tc w-100 white">${i + 1}</p>
           </div>
         </div>
