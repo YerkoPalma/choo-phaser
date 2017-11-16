@@ -36,23 +36,55 @@ var background = css`
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    position: fixed;
+    overflow-y: scroll;
   }
 `
 module.exports = function (state, emit) {
+  var stages = [
+    {
+      id: 'alphabet',
+      name: 'The alphabet'
+    }, {
+      id: 'numbers',
+      name: 'The numbers'
+    }, {
+      id: 'profesions',
+      name: 'The professions'
+    }, {
+      id: 'my-things',
+      name: 'My own things'
+    }, {
+      id: 'classroom',
+      name: 'The classroom'
+    }, {
+      id: 'actions',
+      name: 'Actions'
+    }, {
+      id: 'food',
+      name: 'The food'
+    }, {
+      id: 'animals',
+      name: 'The farm animals'
+    }, {
+      id: 'qualify',
+      name: 'Qualify things'
+    }]
   return html`
   <main class="${font} ${background} cf w-100 pa2-ns bg-light-blue vh-100">
     <h1 class="${heading} tc f1 white">Level Select</h1>
-    <article class="fl w-100 w-50-m  w-25-ns pa4">
-      <div class="aspect-ratio aspect-ratio--1x1 br4 ma3 ${border}">
-        <div class="aspect-ratio aspect-ratio--1x1 ba bw4 b--gold br4 bg-gold">
-          <p class="f-headline tc w-100 white">1</p>
+    ${stages.map((stage, i) => {
+      return html`<article class="fl w-100 w-50-m  w-25-ns pa4">
+      <a href="/stage/${stage.id}" class="ph2 ph0-ns pb3 link db">
+        <div class="aspect-ratio aspect-ratio--1x1 br4 ma3 ${border}">
+          <div class="aspect-ratio aspect-ratio--1x1 ba bw4 b--gold br4 bg-gold">
+            <p class="f-headline tc w-100 white">${i + 1}</p>
+          </div>
         </div>
-      </div>
-      <a href="/stage/demo" class="ph2 ph0-ns pb3 link db">
-        <h3 class="f5 f4-ns mb0 black-90">Demo game</h3>
-        <h3 class="f6 f5 fw4 mt2 black-60">Puntaje total 0</h3>
+        <h3 class="f5 f4-ns mb0 black-90">${stage.name}</h3>
       </a>
-    </article>
+    </article>`
+    })}
   </main>
   `
 }
