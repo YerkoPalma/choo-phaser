@@ -35,8 +35,7 @@ function interactive (state, emitter) {
     })[0]
     // talk a bit slower, they are just kids
     state.tts.rate = 0.9
-    emitter.emit('log:info', state.tts.selectedVoice)
-    emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
+    // emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
   })
   emitter.on('tts:speech-end', function ({ event, id }) {
     if (id === 'opt') state.steps[state.currentStage][state.currentStep].next()
