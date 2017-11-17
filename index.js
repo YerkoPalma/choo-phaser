@@ -28,14 +28,11 @@ function game (state, emitter) {
 }
 
 function interactive (state, emitter) {
-  emitter.once('tts:voices-changed', function () {
+  emitter.on('tts:voices-changed', function () {
     // select an en-UK voice
-    state.tts.selectedVoice = state.tts.voices.filter(voice => {
-      return voice.lang === 'en-GB'
-    })[0]
+    emitter.emit('tts:set-voice', 'Google UK English Female')
     // talk a bit slower, they are just kids
     state.tts.rate = 0.9
-    // emitter.emit('tts:speak', 'Welcome buddy! Please select a game level...')
   })
   emitter.on('tts:speech-end', function ({ event, id }) {
     if (id === 'opt') state.steps[state.currentStage][state.currentStep].next()

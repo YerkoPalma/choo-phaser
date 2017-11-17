@@ -11,17 +11,16 @@
   "author": "Yerko Palma",
   "license": "MIT",
   "dependencies": {
-    "choo": "^6.5.1",
+    "choo": "^6.6.0",
     "choo-stt": "^0.1.0",
-    "choo-tts": "^0.2.0",
+    "choo-tts": "^0.3.0",
     "phaser": "^2.6.2",
     "sheetify": "^6.2.0",
     "tachyons": "^4.9.0"
   },
   "devDependencies": {
     "budo": "^10.0.4",
-    "choo-devtools": "^2.0.0",
-    "choo-log": "^7.2.1",
+    "choo-devtools": "^2.2.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3"
   }

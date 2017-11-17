@@ -48,6 +48,7 @@ var background = css`
   }
 `
 module.exports = function (state, emit) {
+  // emit('tts:set-voice', 'Google UK English Female')
   var stages = [
     {
       id: 'alphabet',
@@ -113,7 +114,7 @@ module.exports = function (state, emit) {
   function onsubmit (e) {
     e.preventDefault()
     state.student = document.getElementById('name').value
-    emit('tts:speak', 'Welcome buddy! Please select a game level...')
+    emit('tts:speak', `Welcome ${state.student}! Please select a game level...`)
     emit('render')
   }
 }

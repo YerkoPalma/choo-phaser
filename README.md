@@ -130,7 +130,7 @@ Right now, there is only one `writeInstructions` function and one `next` functio
 
 ## TODO
 
-- [ ] Talk to the kid
+- [x] Talk to the kid
 - [ ] Save to a github database
 - [ ] Add `/results` page
   - [ ] Use frappe charts
