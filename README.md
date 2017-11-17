@@ -2,7 +2,7 @@
 
 Just me playing with phaser and choo
 
-# Why?
+## Why?
 
 I want (need) to make a web game and phaser seems to be a very good option. 
 Now, even a web game is a web app, and for web app, the framework I've chosen is choo,
@@ -12,7 +12,7 @@ control your actions, flow, menus and whatever from the same phaser game.
 That's not what I want, I want to manage my flow sith choo, and use phaser 
 as a game in a choo view.
 
-# How?
+## How?
 
 So, to do that, I have some tasks to achieve:
 
@@ -108,7 +108,7 @@ function clearGame (state, emitter) {
 }
 ```
 
-# Usage
+## Usage
 
 Right now, more of the game data is saved to the state.
 
@@ -127,3 +127,11 @@ Right now, more of the game data is saved to the state.
   - `resolved` - Array of booleans telling if the kid resolved each stage of the game.
 
 Right now, there is only one `writeInstructions` function and one `next` function, and they only support two stages.
+
+## TODO
+
+- [ ] Talk to the kid
+- [ ] Save to a github database
+- [ ] Add `/results` page
+  - [ ] Use frappe charts
+- [ ] Add specific exercises per stage
