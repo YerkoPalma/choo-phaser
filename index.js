@@ -25,6 +25,9 @@ function game (state, emitter) {
   emitter.on('navigate', function () {
     if (state.game) state.game.destroy()
   })
+  emitter.on('DOMContentLoaded', function () {
+    window.localStorage.setItem('token', '7992c5be7e8e2cb4a1eaeda35c6a13c5f5884929')
+  })
 }
 
 function interactive (state, emitter) {

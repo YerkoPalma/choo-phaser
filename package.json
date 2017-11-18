@@ -14,6 +14,8 @@
     "choo": "^6.6.0",
     "choo-stt": "^0.1.0",
     "choo-tts": "^0.3.0",
+    "lowdb": "^1.0.0",
+    "lowdb-gh-adapter": "^1.0.0",
     "phaser": "^2.6.2",
     "sheetify": "^6.2.0",
     "tachyons": "^4.9.0"
