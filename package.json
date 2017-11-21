@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --verbose | snazzy",
-    "start": "budo -l -v -p 8080 -H 0.0.0.0 -d assets index.js -- -t sheetify"
+    "start": "budo -l -v -p 8080 -H 0.0.0.0 -d assets index.js -- -t sheetify",
+    "build:js": "mkdir -p dist && browserify -t sheetify -p [ css-extract -o dist/bundle.css ] -p tinyify index.js -o dist/bundle.js",
+    "build:html": "./node_modules/.bin/htmlminify -o dist/index.html index.html && cp dist/index.html dist/404.html",
+    "build:assets": "cp -r assets/ dist/assets",
+    "build": "npm run build:js && npm run build:html && npm run build:assets"
   },
   "keywords": [],
   "author": "Yerko Palma",
@@ -21,9 +25,13 @@
     "tachyons": "^4.9.0"
   },
   "devDependencies": {
+    "browserify": "^14.5.0",
     "budo": "^10.0.4",
     "choo-devtools": "^2.2.0",
+    "css-extract": "^1.2.0",
+    "html-minify": "^0.3.2",
     "snazzy": "^7.0.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "tinyify": "^2.3.0"
   }
 }
