@@ -54,7 +54,7 @@
   "sprites": [
     {
       "name": "kids",
-      "file": "/singing.png"
+      "file": "singing.png"
     }
   ]
 }
