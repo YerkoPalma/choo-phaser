@@ -38,7 +38,7 @@ var borderSuccess = css`
 `
 var background = css`
   :host {
-    background: url(background.png) no-repeat center center fixed; 
+    background: url(assets/background.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
