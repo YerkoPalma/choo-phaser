@@ -27,7 +27,7 @@ module.exports = function (state, emit) {
   } else if (state.params.id === 'qualify') {
     gameOptions = require('./qualify.json')
   }
-  var game = GameFactory(gameOptions, state, emit)
+  var game = GameFactory(Object.assign({ assets: './assets' }, gameOptions), state, emit)
 
   game.start()
   // bypass nanorouter assertion returning an empty main
