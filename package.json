@@ -8,7 +8,7 @@
     "start": "budo -l -v -p 8080 -H 0.0.0.0 -d assets index.js:bundle.js -- -t sheetify",
     "build:js": "mkdir -p dist && browserify -t sheetify -p [ css-extract -o dist/bundle.css ] -p [ tinyify --no-flat ] index.js -o dist/bundle.js",
     "build:html": "./node_modules/.bin/htmlminify -o dist/index.html index.html && cp dist/index.html dist/404.html",
-    "build:assets": "cp -r assets/ dist/assets",
+    "build:assets": "cp -a assets/ dist/assets",
     "build": "npm run build:js && npm run build:html && npm run build:assets"
   },
   "keywords": [],
