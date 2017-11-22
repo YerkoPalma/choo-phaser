@@ -23,16 +23,17 @@
           "Stage 1: Select by first letter",
           "From the following objects select the one that starts with a letter 'C'"
         ],
-        "options": ["cat", "rat", "orange", "dog"],
+        "options": ["cat", "dog", "orange", "rat" ],
         "images": true,
-        "correctOption": 0
+        "correctOption": "cat"
       },
       {
         "instructions": [
-          "How many kids have their eyes closed?"
+          "Which object starts with a vocal letter"
         ],
-        "options": ["3", "2", "1", "4", "6"],
-        "correctOption": "4"
+        "options": ["cat", "dog", "orange", "rat" ],
+        "images": true,
+        "correctOption": "orange"
       }
     ],
       [
