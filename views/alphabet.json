@@ -39,17 +39,20 @@
       [
         {
           "instructions": [
-            "Stage 2: Resolve number operations",
-            "Select the correct option from the following operation"
+            "Stage 2: Count the letters",
+            "Which object has no letters 'A' in its name"
           ],
-          "options": ["1", "2", "3", "4", "5"],
-          "correctOption": "2"
+          "options": ["cat", "dog", "orange", "rat" ],
+          "images": true,
+          "correctOption": "dog"
         },
         {
           "instructions": [
+            "Select the object that has 3 vocals in its name"
           ],
-          "options": ["3", "2", "1", "4", "6"],
-          "correctOption": "4"
+          "options": ["cat", "dog", "orange", "rat" ],
+          "images": true,
+          "correctOption": "orange"
         }
       ]
     ],
