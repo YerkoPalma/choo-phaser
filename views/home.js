@@ -36,17 +36,31 @@ var borderSuccess = css`
     box-shadow: 0px 0px 0px 1rem #137752;
   }
 `
-var background = css`
-  :host {
-    background: url(assets/background.png) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    position: fixed;
-    overflow-y: scroll;
-  }
-`
+var background
+if (process.env.NODE_ENV === 'production') {
+  background = css`
+    :host {
+      background: url(assets/background.png) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      position: fixed;
+      overflow-y: scroll;
+    }`
+} else {
+  background = css`
+    :host {
+      background: url(background.png) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      position: fixed;
+      overflow-y: scroll;
+    }`
+}
+
 module.exports = function (state, emit) {
   // emit('tts:set-voice', 'Google UK English Female')
   var stages = [

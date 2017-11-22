@@ -20,11 +20,12 @@
       {
         "instructions": [
           "Complete the following three stages to finish the game",
-          "Stage 1: Select the correct numbers",
-          "From the singing kids, how many of them have dresses?"
+          "Stage 1: Select by first letter",
+          "From the following objects select the one that starts with a letter 'C'"
         ],
-        "options": ["1", "2", "3", "4", "5"],
-        "correctOption": "2"
+        "options": ["cat", "rat", "orange", "dog"],
+        "images": true,
+        "correctOption": 0
       },
       {
         "instructions": [
@@ -53,8 +54,24 @@
     ],
   "sprites": [
     {
-      "name": "kids",
-      "file": "singing.png"
+      "name": "cat",
+      "file": "cat.png",
+      "isOption": true
+    },
+    {
+      "name": "dog",
+      "file": "dog.png",
+      "isOption": true
+    },
+    {
+      "name": "rat",
+      "file": "rat.png",
+      "isOption": true
+    },
+    {
+      "name": "orange",
+      "file": "orange.png",
+      "isOption": true
     }
   ]
 }
