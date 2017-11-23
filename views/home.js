@@ -77,9 +77,6 @@ module.exports = function (state, emit) {
       id: 'my-things',
       name: 'My own things'
     }, {
-      id: 'classroom',
-      name: 'The classroom'
-    }, {
       id: 'actions',
       name: 'Actions'
     }, {
