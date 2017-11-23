@@ -2,8 +2,6 @@ var html = require('choo/html')
 var css = require('sheetify')
 
 var font = css`
-  @import url('https://fonts.googleapis.com/css?family=Carter+One');
-  @import url('https://fonts.googleapis.com/css?family=Skranji');
   :host {
     font-family: 'Carter One', cursive;
   }

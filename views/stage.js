@@ -14,8 +14,6 @@ module.exports = function (state, emit) {
     gameOptions = require('./alphabet.json')
   } else if (state.params.id === 'animals') {
     gameOptions = require('./animals.json')
-  } else if (state.params.id === 'classroom') {
-    gameOptions = require('./classroom.json')
   } else if (state.params.id === 'food') {
     gameOptions = require('./food.json')
   } else if (state.params.id === 'my-things') {
